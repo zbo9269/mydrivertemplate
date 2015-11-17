@@ -1,0 +1,10 @@
+本项目为linux下设备驱动的一个模板项目
+driver_test    主文件夹
+----|driver.c  主文件 
+----|driver.h  头文件
+----|Makefile  
+----|driver_load    加载驱动脚本
+----|driver_unload    卸载驱动脚本
+----|modules    文件夹存放编译好的驱动
+--------|
+--------|driver.ko   编译好的驱动
