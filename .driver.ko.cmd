@@ -1,0 +1,1 @@
+cmd_/home/zhangb/mydrivertemplate/driver.ko := ld -r -m elf_i386 -T ./scripts/module-common.lds --build-id  -o /home/zhangb/mydrivertemplate/driver.ko /home/zhangb/mydrivertemplate/driver.o /home/zhangb/mydrivertemplate/driver.mod.o
