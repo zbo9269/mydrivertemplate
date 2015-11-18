@@ -11,5 +11,6 @@ driver_test    主文件夹
 
 字符驱动程序编写思路
 1.分配并注册设备号，利用动态分配alloc_chrdev_region()。
-2.头文件中申明设备特定结构，需包含该设备在内核中的结构cdev。
-3.对cdev进行初始化(cdev_init),并添加到系统中(cdev_add)。
+2.利用设备操作结构(file_operations)来连接要对设备进行的操作。
+3.头文件中申明设备特定结构，需包含该设备在内核中的结构cdev。
+4.对cdev进行初始化(cdev_init),并添加到系统中(cdev_add)。
