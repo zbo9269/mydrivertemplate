@@ -39,6 +39,7 @@ static int clearIndo(void)
     return 0 ;
 }
 
+/*添加设备到系统*/
 static void driver_setup_cdev(struct driver_dev *dev , int minor)
 {
     int err ;
@@ -49,11 +50,15 @@ static void driver_setup_cdev(struct driver_dev *dev , int minor)
     err = cdev_add(&dev->cdev,devno,1);
     if (err) 
         printk(KERN_NOTICE "Error %d adding driver%d", err , minor);  
-}   
+} 
+
+/*从系统卸载设备*/  
 static void driver_uninstall_cdev(struct driver_dev *dev)  
 {
     cdev_del(dev);
 }  
+
+/*设备操作结构*/
 struct file_operations driver_ops() = {
     .owner = THIS_MODULE,
     .read  = driver_read,
