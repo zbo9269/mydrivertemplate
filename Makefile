@@ -9,5 +9,5 @@ default:
 	$(MAKE) -C $(KDIR) M=$(PWD) modules
 	mv ./driver.ko ./modules/driver.ko
 clean:
-	rm -rf *.o *.mod.c *.ko */*.ko *.symvers *order *.markers .??* 
+	rm -rf *.o *.mod.c *.ko */*.ko *.symvers *order *.markers .driver* .tmp* 
 endif
