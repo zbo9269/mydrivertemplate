@@ -7,13 +7,14 @@
 
 #include "driver.h"
 
+/**/
 static char *whom ="zhangb";
 static int howmany =1;
 module_param(whom,charp,S_IRUGO);
 module_param(howmany,int,S_IRUGO);
 
-int nr = 3 ;
-static int getIndo(dev_t major)  
+/**/
+static int getIndo(void)  
 {
     int rt = -1;   
     dev_t dev = -1 ;
@@ -31,26 +32,32 @@ static int getIndo(dev_t major)
     return rt ; 
 } 
 
-static int clearIndo(dev_t major)
+/**/
+static int clearIndo(void)
 {
     unregister_chrdev_region(MKDEV(major , 0) ,nr);  
+    return 0 ;
 }
 
+/**/
 static int __init testinit(void)
 {
     printk(KERN_ALERT "module init\n"); 
-    getIndo(major);   
+    getIndo();   
+
 }
 
+/**/
 static void __exit testexit(void)
 {
     printk(KERN_ALERT "module exit\n");
-    clearIndo(major);    
+    clearIndo();    
 }
 
 module_init(testinit);  
 module_exit(testexit); 
 
+/**/
 MODULE_LICENSE("Dual BSD/GPL");
 MODULE_AUTHOR("zhangb"); 
 MODULE_VERSION("v1.0");  
