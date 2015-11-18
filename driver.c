@@ -40,24 +40,7 @@ static int clearIndo(void)
     return 0 ;
 }
 
-/*添加设备到系统*/
-static void driver_setup_cdev(struct driver_dev *dev , int minor)
-{
-    int err ;
-    dev_t devno = MKDEV(major , minor) ;
-    
-    cdev_init(&dev->cdev , &driver_ops);  
-    dev->cdev.owner = THIS_MODULE ;
-    err = cdev_add(&dev->cdev,devno,1);
-    if (err) 
-        printk(KERN_NOTICE "Error %d adding driver%d", err , minor);  
-} 
 
-/*从系统卸载设备*/  
-static void driver_uninstall_cdev(struct driver_dev *dev)  
-{
-    cdev_del(dev);
-}  
 
 int diver_open(struct inode *inode , struct file *filep)
 {
@@ -83,6 +66,25 @@ struct file_operations driver_ops = {
     .open  = driver_open,
     .release  = driver_release,
 };
+
+/*添加设备到系统*/
+static void driver_setup_cdev(struct driver_dev *dev , int minor)
+{
+    int err ;
+    dev_t devno = MKDEV(major , minor) ;
+    
+    cdev_init(&dev->cdev , &driver_ops);  
+    dev->cdev.owner = THIS_MODULE ;
+    err = cdev_add(&dev->cdev,devno,1);
+    if (err) 
+        printk(KERN_NOTICE "Error %d adding driver%d", err , minor);  
+} 
+
+/*从系统卸载设备*/  
+static void driver_uninstall_cdev(struct driver_dev *dev)  
+{
+    cdev_del(dev);
+}  
 
 
 /*初始化设备*/
