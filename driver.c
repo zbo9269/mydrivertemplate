@@ -4,6 +4,7 @@
 #include <linux/types.h>
 #include <linux/kdev_t.h>
 #include <linux/fs.h>
+#include <linux/cdev.h>
 
 #include "driver.h"
 
@@ -58,12 +59,27 @@ static void driver_uninstall_cdev(struct driver_dev *dev)
     cdev_del(dev);
 }  
 
+int diver_open(struct inode *inode , struct file *filep)
+{
+    struct driver_dev *dev ;
+    dev = container_of(inode->i_cdev, driver_dev, cdev); 
+    filep->private_data = dev ; 
+    return 0 ;
+}
+
+int diver_release(struct inode *inode , struct file *filep)
+{
+    struct driver_dev *dev = filep->private_data ;
+    return 0 ; 
+}
+
+
 /*设备操作结构*/
-struct file_operations driver_ops() = {
+struct file_operations driver_ops = {
     .owner = THIS_MODULE,
-    .read  = driver_read,
-    .write  = driver_write,
-    .ioctl  = driver_ioctl,
+    //.read  = driver_read,
+    //.write  = driver_write,
+    //.ioctl  = driver_ioctl,
     .open  = driver_open,
     .release  = driver_release,
 };
