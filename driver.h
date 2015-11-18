@@ -3,3 +3,8 @@
 int nr = 4;
 //主设备号
 dev_t major = 0 ; 
+
+struct driver_dev 
+{
+    struct cdev cdev ;   
+};     

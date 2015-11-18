@@ -39,6 +39,31 @@ static int clearIndo(void)
     return 0 ;
 }
 
+static void driver_setup_cdev(struct driver_dev *dev , int minor)
+{
+    int err ;
+    dev_t devno = MKDEV(major , minor) ;
+    
+    cdev_init(&dev->cdev , &driver_ops);  
+    dev->cdev.owner = THIS_MODULE ;
+    err = cdev_add(&dev->cdev,devno,1);
+    if (err) 
+        printk(KERN_NOTICE "Error %d adding driver%d", err , minor);  
+}   
+static void driver_uninstall_cdev(struct driver_dev *dev)  
+{
+    cdev_del(dev);
+}  
+struct file_operations driver_ops() = {
+    .owner = THIS_MODULE,
+    .read  = driver_read,
+    .write  = driver_write,
+    .ioctl  = driver_ioctl,
+    .open  = driver_open,
+    .release  = driver_release,
+};
+
+
 /*初始化设备*/
 static int __init testinit(void)
 {
